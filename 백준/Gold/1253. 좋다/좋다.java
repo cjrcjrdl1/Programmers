@@ -6,18 +6,22 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
         int N = Integer.parseInt(br.readLine());
+        int[] A = new int[N];
         int result = 0;
-        long A[] = new long[N];
+
         StringTokenizer st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
-            A[i] = Long.parseLong(st.nextToken());
+            A[i] = Integer.parseInt(st.nextToken());
         }
         Arrays.sort(A);
+
         for (int k = 0; k < N; k++) {
-            long find = A[k];
+            int find = A[k];
             int i = 0;
             int j = N - 1;
             while (i < j) {
@@ -39,7 +43,6 @@ public class Main {
         }
 
         System.out.println(result);
-        br.close();
 
     }
 }
