@@ -2,49 +2,56 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.StringTokenizer;
 
 public class Main {
+    static int n;
+    static boolean visited[];
+    static int parentNode[];
+    static ArrayList<ArrayList<Integer>> tree = new ArrayList<>();
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        StringTokenizer st;
+        n = Integer.parseInt(br.readLine());
 
-        ArrayList<ArrayList<Integer>> tree = new ArrayList<>();
-        for (int i = 0; i <= n; i++) {
+        for (int i = 0; i < n + 1; i++) {
             tree.add(new ArrayList<>());
         }
 
-        for (int i = 1; i < n; i++) {
-            st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < n-1; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
             int x = Integer.parseInt(st.nextToken());
             int y = Integer.parseInt(st.nextToken());
             tree.get(x).add(y);
             tree.get(y).add(x);
         }
 
-        boolean[] visited = new boolean[n+1];
-        int[] parentNode = new int[n+1]; //부모 노드 저장 배열
+        visited = new boolean[n + 1];
+        parentNode = new int[n + 1];
 
-        //BFS
+        bfs(1);
+
+        for (int i = 2; i < n + 1; i++) {
+            System.out.println(parentNode[i]);
+        }
+    }
+
+    private static void bfs(int start) {
         Queue<Integer> q = new LinkedList<>();
-        q.add(1);
-        visited[1] = true;
+        visited[start] = true;
+        q.add(start);
+
         while (!q.isEmpty()) {
-            int v = q.poll();
-            for (int node : tree.get(v)) {
+            Integer now = q.poll();
+            for (Integer node : tree.get(now)) {
                 if (!visited[node]) {
                     visited[node] = true;
                     q.add(node);
-                    parentNode[node]= v;
+                    parentNode[node] = now;
                 }
             }
         }
-
-        for (int i = 2; i <= n; i++) {
-            System.out.println(parentNode[i]);
-        }
-
     }
-
 }
