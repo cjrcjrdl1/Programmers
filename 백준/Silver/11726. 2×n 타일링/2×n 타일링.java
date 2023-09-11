@@ -4,18 +4,24 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class Main {
+
+    static Long[] dp = new Long[1001];
+    
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        dp[1] = 1L;
+        dp[2] = 2L;
         int n = Integer.parseInt(br.readLine());
+        System.out.println(logic(n));
 
-        int[] dp = new int[1001];
-        dp[1] = 1;
-        dp[2] = 2;
-        for (int i = 3; i <= n; i++) {
-            dp[i] = (dp[i - 1] + dp[i - 2]) % 10007;
-        }
-
-        System.out.println(dp[n]);
     }
+
+    static long logic(int n) {
+        if (dp[n] == null) {
+            dp[n] = logic(n - 2) + logic(n-1);
+        }
+        return dp[n] % 10007;
+    }
+
 
 }
